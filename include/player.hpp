@@ -3,5 +3,5 @@
 using namespace std;
 
 class Player {
-	bool my_turn { fasle };
+	bool my_turn { false };
 };
