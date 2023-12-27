@@ -1,0 +1,51 @@
+# Compiled binaries
+*.exe
+*.o
+*.obj
+*.d
+*.ilk
+*.ipdb
+*.exp
+*.lib
+*.pdb
+*.ncb
+*.log
+
+# Intermediate build files
+*~
+*.aps
+*.bak
+*.tmp
+*.class
+
+# Created by Visual Studio
+*GeneratedFiles
+*Debug
+*Release
+
+# VS Code directories
+.vscode/
+
+# Additional files
+Thumbs.db
+Web.config
+ehthumbs.db
+
+# Visual Studio temporary files
+UpgradeLog.xml
+UpgradeLog_*
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
