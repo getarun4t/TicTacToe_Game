@@ -17,6 +17,7 @@ bool Play::isValid(int coordinate) {
 		else {
 			Play::board[coordinate] = "O";
 		}
+
 	}
 	else {
 		cout << "Invalid Input ! Re-try with a valid input !! "
@@ -28,6 +29,7 @@ bool Play::isValid(int coordinate) {
 void Play::printBoard() {
 	cout << endl;
 	cout << "Current board is below" << endl;
+
 	for (auto y : board) {
 		for (auto x : y) {
 			cout << "| ";
