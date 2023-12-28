@@ -10,8 +10,13 @@ void Play::getNextOption() {
 }
 
 bool Play::isValid(int coordinate) {
-	if (Play::board[coordinate] == 0 && coordinate < 3) {
-		Play::board[coordinate] == 1;
+	if (Play::board[coordinate] == "0" && coordinate < 3) {
+		if (A.getTurn()) {
+			Play::board[coordinate] = "X";
+		}
+		else {
+			Play::board[coordinate] = "O";
+		}
 	}
 	else {
 		cout << "Invalid Input ! Re-try with a valid input !! "
@@ -45,13 +50,14 @@ void Play::printBoard() {
 
 void Play::MarkInBoard() {
 	if (A.getTurn)
-		board[nextOption.first][nextOption.second] == 1;
+		board[nextOption.first][nextOption.second] == "X";
 	else
-		board[nextOption.first][nextOption.second] == 2;
+		board[nextOption.first][nextOption.second] == "O";
+	checkedCellCount++;
 }
 
 void Play::switchPlayer() {
-	if (!A.getTurn) {
+	if (!A.getTurn()) {
 		A.setTurn();
 		B.resetTurn();
 	}
@@ -63,7 +69,24 @@ void Play::switchPlayer() {
 
 Play::Play() {
 	checkedCellCount = 0;
-	board = vector<vector<int>>(3, vector<int>(3, 0));
+	board = vector<vector<string>>(3, vector<string>(3, "0"));
+}
+
+bool Play::checkGameEnd() {
+	if (checkedCellCount != 9) {
+		for (string a : {"X", "O"}) {
+			if (!(board[0][0] == a && board[1][1] == a && board[2][2] == a) or
+				!(board[0][2] == a && board[1][1] == a && board[2][0] == a) or
+				!(board[0][0] == a && board[0][1] == a && board[0][2] == a) or
+				!(board[1][0] == a && board[1][1] == a && board[1][2] == a) or
+				!(board[2][0] == a && board[2][1] == a && board[2][2] == a) or
+				!(board[0][0] == a && board[1][0] == a && board[2][0] == a) or
+				!(board[0][1] == a && board[1][1] == a && board[2][1] == a) or
+				!(board[0][2] == a && board[1][2] == a && board[2][2] == a))
+				return true;
+		}
+	}
+	return false;
 }
 
 void Play::run() {
@@ -73,10 +96,4 @@ void Play::run() {
 		getNextoption();
 		MarkInBoard();
 	} while (checkGameEnd());
-}
-
-bool Play::checkGameEnd() {
-	if (checkedCellCount != 9) {
-		
-	}
 }
