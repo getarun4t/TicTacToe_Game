@@ -1,19 +1,23 @@
 #include "\include\play.hpp"
 
-Play::getNextOption() {
-	pair<int, int> input;
+void Play::getNextOption() {
 	do {
 		cout << "Enter the x co-ordinates" << endl;
-		cin >> input.first;
+		cin >> nextOption.first;
 		cout << "Enter the y co-ordinates" << endl;
-		cin >> input.second;
-	} while (Play::isValid(input.first) && Play::isValid(input.second));
-	return input;
+		cin >> nextOption.second;
+	} while (Play::isValid(nextOption.first) && Play::isValid(nextOption.second));
 }
 
-Play::isValid(int coordinate) {
-	if (Play::board[coordinate] == 0 && coordinate < 3) {
-		Play::board[coordinate] == 1;
+bool Play::isValid(int coordinate) {
+	if (Play::board[coordinate] == "0" && coordinate < 3) {
+		if (A.getTurn()) {
+			Play::board[coordinate] = "X";
+		}
+		else {
+			Play::board[coordinate] = "O";
+		}
+
 	}
 	else {
 		cout << "Invalid Input ! Re-try with a valid input !! "
@@ -22,12 +26,18 @@ Play::isValid(int coordinate) {
 	return true;
 }
 
-Play::printBoard(Play::board) {
+void Play::printBoard() {
+	cout << endl;
+	cout << "Current board is below" << endl;
+
 	for (auto y : board) {
 		for (auto x : y) {
 			cout << "| ";
 			if (x) {
-				cout << x ;
+				if (x == 1)
+					cout << "X";
+				else
+					cout << "O";
 			}
 			else {
 				cout << " ";
@@ -40,6 +50,52 @@ Play::printBoard(Play::board) {
 	}
 }
 
-Play::checkGameEnd() {
+void Play::MarkInBoard() {
+	if (A.getTurn)
+		board[nextOption.first][nextOption.second] == "X";
+	else
+		board[nextOption.first][nextOption.second] == "O";
+	checkedCellCount++;
+}
 
+void Play::switchPlayer() {
+	if (!A.getTurn()) {
+		A.setTurn();
+		B.resetTurn();
+	}
+	else {
+		B.setTurn();
+		A.resetTurn();
+	}
+}
+
+Play::Play() {
+	checkedCellCount = 0;
+	board = vector<vector<string>>(3, vector<string>(3, "0"));
+}
+
+bool Play::checkGameEnd() {
+	if (checkedCellCount != 9) {
+		for (string a : {"X", "O"}) {
+			if (!(board[0][0] == a && board[1][1] == a && board[2][2] == a) or
+				!(board[0][2] == a && board[1][1] == a && board[2][0] == a) or
+				!(board[0][0] == a && board[0][1] == a && board[0][2] == a) or
+				!(board[1][0] == a && board[1][1] == a && board[1][2] == a) or
+				!(board[2][0] == a && board[2][1] == a && board[2][2] == a) or
+				!(board[0][0] == a && board[1][0] == a && board[2][0] == a) or
+				!(board[0][1] == a && board[1][1] == a && board[2][1] == a) or
+				!(board[0][2] == a && board[1][2] == a && board[2][2] == a))
+				return true;
+		}
+	}
+	return false;
+}
+
+void Play::run() {
+	do {
+		switchPlayer();
+		printBoard();
+		getNextoption();
+		MarkInBoard();
+	} while (checkGameEnd());
 }
