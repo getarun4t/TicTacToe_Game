@@ -1,26 +1,29 @@
-#include "player.hpp"
+#ifndef PLAY_HPP
+#define PLAY_HPP
 
+#include "player.hpp"
 #include <iostream>
 #include <vector>
 #include <string>
 
-using namespace std;
-
 class Play {
 	int checkedCellCount;
-	vector<vector<string>> board{0};
-	pair<int, int> nextOption;
+	std::vector<std::vector<std::string>> board;
+	std::pair<int, int> nextOption;
 	Player A;
 	Player B;
 
 	void getNextOption();
-	bool isValid();
+	bool isValid(int coordinate_x, int coordinate_y);
 	void printBoard();
-	Player checkWinnner();
+	Player checkWinner();
 	bool checkGameEnd();
-	void run();
-	void MarkInBoard();
+	void markInBoard();
 	void switchPlayer();
+
 public:
 	Play();
+	void run();
 };
+
+#endif // PLAY_HPP

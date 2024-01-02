@@ -1,24 +1,17 @@
-#include <iostream>
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 
-using namespace std;
+#include <iostream>
 
 class Player {
 	bool my_turn;
 
 public:
-	bool getTurn() {
-		return my_turn;
-	}
+	bool getTurn();
+	void setTurn();
+	void resetTurn();
 
-	void setTurn() {
-		my_turn = true;
-	}
-
-	void resetTurn() {
-		my_turn = false;
-	}
-
-	Player() {
-		my_turn{ false };
-	}
+	Player();
 };
+
+#endif // PLAYER_HPP
