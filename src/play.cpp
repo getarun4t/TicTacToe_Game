@@ -1,27 +1,29 @@
-#include "\include\play.hpp"
+#include "play.hpp"
+
+using namespace std;
 
 void Play::getNextOption() {
 	do {
-		cout << "Enter the x co-ordinates" << endl;
+		cout << "Enter the x-coordinate (0, 1, or 2): " << endl;
 		cin >> nextOption.first;
-		cout << "Enter the y co-ordinates" << endl;
+		cout << "Enter the y-coordinate (0, 1, or 2): " << endl;
 		cin >> nextOption.second;
-	} while (Play::isValid(nextOption.first) && Play::isValid(nextOption.second));
+	} while (isValid(nextOption.first, nextOption.second));
 }
 
-bool Play::isValid(int coordinate) {
-	if (Play::board[coordinate] == "0" && coordinate < 3) {
+bool Play::isValid(int coordinate_x, int coordinate_y) {
+	if (board[coordinate_x][coordinate_y] == "0" && coordinate_y < 3 && coordinate_x < 3) {
 		if (A.getTurn()) {
-			Play::board[coordinate] = "X";
+			board[coordinate_x][coordinate_y] = "X";
 		}
 		else {
-			Play::board[coordinate] = "O";
+			board[coordinate_x][coordinate_y] = "O";
 		}
-
 	}
 	else {
-		cout << "Invalid Input ! Re-try with a valid input !! "
-			return false;
+		cout << "Invalid Input ! Re-try with a valid input !! ";
+		printBoard();
+		return false;
 	}
 	return true;
 }
@@ -30,17 +32,14 @@ void Play::printBoard() {
 	cout << endl;
 	cout << "Current board is below" << endl;
 
-	for (auto y : board) {
-		for (auto x : y) {
+	for (const auto& y : board) {
+		for (const auto& x : y) {
 			cout << "| ";
-			if (x) {
-				if (x == 1)
-					cout << "X";
-				else
-					cout << "O";
+			if (x == "0") {
+				cout << " ";
 			}
 			else {
-				cout << " ";
+				cout << x;
 			}
 			cout << " |" << endl;
 		}
@@ -50,11 +49,11 @@ void Play::printBoard() {
 	}
 }
 
-void Play::MarkInBoard() {
-	if (A.getTurn)
-		board[nextOption.first][nextOption.second] == "X";
+void Play::markInBoard() {
+	if (A.getTurn())
+		board[nextOption.first][nextOption.second] = "X";
 	else
-		board[nextOption.first][nextOption.second] == "O";
+		board[nextOption.first][nextOption.second] = "O";
 	checkedCellCount++;
 }
 
@@ -69,23 +68,21 @@ void Play::switchPlayer() {
 	}
 }
 
-Play::Play() {
-	checkedCellCount = 0;
-	board = vector<vector<string>>(3, vector<string>(3, "0"));
-}
+Play::Play() : checkedCellCount(0), board(vector<vector<string>>(3, vector<string>(3, "0"))) {};
 
 bool Play::checkGameEnd() {
 	if (checkedCellCount != 9) {
-		for (string a : {"X", "O"}) {
-			if (!(board[0][0] == a && board[1][1] == a && board[2][2] == a) or
-				!(board[0][2] == a && board[1][1] == a && board[2][0] == a) or
-				!(board[0][0] == a && board[0][1] == a && board[0][2] == a) or
-				!(board[1][0] == a && board[1][1] == a && board[1][2] == a) or
-				!(board[2][0] == a && board[2][1] == a && board[2][2] == a) or
-				!(board[0][0] == a && board[1][0] == a && board[2][0] == a) or
-				!(board[0][1] == a && board[1][1] == a && board[2][1] == a) or
-				!(board[0][2] == a && board[1][2] == a && board[2][2] == a))
+		for (const string& a : { "X", "O" }) {
+			if (!(board[0][0] == a && board[1][1] == a && board[2][2] == a) ||
+				!(board[0][2] == a && board[1][1] == a && board[2][0] == a) ||
+				!(board[0][0] == a && board[0][1] == a && board[0][2] == a) ||
+				!(board[1][0] == a && board[1][1] == a && board[1][2] == a) ||
+				!(board[2][0] == a && board[2][1] == a && board[2][2] == a) ||
+				!(board[0][0] == a && board[1][0] == a && board[2][0] == a) ||
+				!(board[0][1] == a && board[1][1] == a && board[2][1] == a) ||
+				!(board[0][2] == a && board[1][2] == a && board[2][2] == a)) {
 				return true;
+			}
 		}
 	}
 	return false;
@@ -95,7 +92,7 @@ void Play::run() {
 	do {
 		switchPlayer();
 		printBoard();
-		getNextoption();
-		MarkInBoard();
+		getNextOption();
+		markInBoard();
 	} while (checkGameEnd());
 }
