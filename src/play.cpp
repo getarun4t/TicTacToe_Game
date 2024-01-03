@@ -13,39 +13,33 @@ void Play::getNextOption() {
 
 bool Play::isValid(int coordinate_x, int coordinate_y) {
 	if (board[coordinate_x][coordinate_y] == "0" && coordinate_y < 3 && coordinate_x < 3) {
-		if (A.getTurn()) {
-			board[coordinate_x][coordinate_y] = "X";
-		}
-		else {
-			board[coordinate_x][coordinate_y] = "O";
-		}
+		return false;
 	}
 	else {
 		cout << "Invalid Input ! Re-try with a valid input !! ";
 		printBoard();
-		return false;
+		return true;
 	}
-	return true;
 }
 
 void Play::printBoard() {
 	cout << endl;
 	cout << "Current board is below" << endl;
 
+	cout << "=============" << endl;
 	for (const auto& y : board) {
+		cout << "|";
 		for (const auto& x : y) {
-			cout << "| ";
 			if (x == "0") {
-				cout << " ";
+				cout << "   ";
 			}
 			else {
-				cout << x;
+				cout << " " << x << " ";
 			}
-			cout << " |" << endl;
+			cout << "|";
 		}
 		cout << endl;
-		cout << " ____________" << endl;
-		cout << endl;
+		cout << "=============" << endl;
 	}
 }
 
@@ -71,19 +65,44 @@ void Play::switchPlayer() {
 Play::Play() : checkedCellCount(0), board(vector<vector<string>>(3, vector<string>(3, "0"))) {};
 
 bool Play::checkGameEnd() {
-	if (checkedCellCount != 9) {
-		for (const string& a : { "X", "O" }) {
-			if (!(board[0][0] == a && board[1][1] == a && board[2][2] == a) ||
-				!(board[0][2] == a && board[1][1] == a && board[2][0] == a) ||
-				!(board[0][0] == a && board[0][1] == a && board[0][2] == a) ||
-				!(board[1][0] == a && board[1][1] == a && board[1][2] == a) ||
-				!(board[2][0] == a && board[2][1] == a && board[2][2] == a) ||
-				!(board[0][0] == a && board[1][0] == a && board[2][0] == a) ||
-				!(board[0][1] == a && board[1][1] == a && board[2][1] == a) ||
-				!(board[0][2] == a && board[1][2] == a && board[2][2] == a)) {
+	string winner = "Waiting";
+	for (const string& a : { "X", "O" }) {
+		if ((board[0][0] == a && board[1][1] == a && board[2][2] == a) ||
+			(board[0][2] == a && board[1][1] == a && board[2][0] == a) ||
+			(board[0][0] == a && board[0][1] == a && board[0][2] == a) ||
+			(board[1][0] == a && board[1][1] == a && board[1][2] == a) ||
+			(board[2][0] == a && board[2][1] == a && board[2][2] == a) ||
+			(board[0][0] == a && board[1][0] == a && board[2][0] == a) ||
+			(board[0][1] == a && board[1][1] == a && board[2][1] == a) ||
+			(board[0][2] == a && board[1][2] == a && board[2][2] == a)) {
+			winner = a;
+			break;
+		}
+		else {
+			if (checkedCellCount <= 8) {
 				return true;
 			}
+			else {
+				break;
+			}
 		}
+	}
+
+	if (winner == "X") {
+		cout << endl << "Player A wins" << endl;
+	}
+	else if (winner == "O") {
+		cout << endl << "Player B wins" << endl;
+	}
+	else {
+		cout << endl << "No winner. Game ends !!" << endl;
+	}
+
+	printBoard();
+	string x = "Waiting";
+	while (x == "Waiting") {
+		cout << "Press any key to exit" << endl;
+		cin >> x;
 	}
 	return false;
 }
