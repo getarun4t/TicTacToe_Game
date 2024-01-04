@@ -4,22 +4,36 @@ using namespace std;
 
 void Play::getNextOption() {
 	do {
-		cout << "Enter the x-coordinate (0, 1, or 2): " << endl;
-		cin >> nextOption.first;
-		cout << "Enter the y-coordinate (0, 1, or 2): " << endl;
-		cin >> nextOption.second;
+		do {
+			cout << "Enter the x-coordinate (0, 1, or 2): " << endl;
+			cin >> nextOption.first;
+			if (cin.fail()) {
+				cout << "Invalid input. Please enter an integer." << endl;
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+		} while (cin.fail());
+		do {
+			cout << "Enter the y-coordinate (0, 1, or 2): " << endl;
+			cin >> nextOption.second;
+			if (cin.fail()) {
+				cout << "Invalid input. Please enter an integer." << endl;
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+		} while (cin.fail());
 	} while (isValid(nextOption.first, nextOption.second));
 }
 
 bool Play::isValid(int coordinate_x, int coordinate_y) {
-	if (board[coordinate_x][coordinate_y] == "0" && coordinate_y < 3 && coordinate_x < 3) {
-		return false;
+	if (coordinate_y < 3 && coordinate_x < 3) {
+		if (board[coordinate_x][coordinate_y] == "0") {
+			return false;
+		}
 	}
-	else {
-		cout << "Invalid Input ! Re-try with a valid input !! ";
-		printBoard();
-		return true;
-	}
+	cout << "Invalid Input ! Re-try with a valid input !! ";
+	printBoard();
+	return true;
 }
 
 void Play::printBoard() {
