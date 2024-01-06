@@ -14,12 +14,12 @@ class Play {
 	Player B;
 
 	void getNextOption();
-	bool isValid(int coordinate_x, int coordinate_y);
+	bool isEmpty(int coordinate_x, int coordinate_y);
 	void printBoard();
-	Player checkWinner();
 	bool checkGameEnd();
 	void markInBoard();
 	void switchPlayer();
+	int requestCoordinates(std::string axes);
 
 public:
 	Play();

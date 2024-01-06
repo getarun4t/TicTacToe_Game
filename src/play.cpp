@@ -3,33 +3,38 @@
 using namespace std;
 
 void Play::getNextOption() {
+	std::pair<int, int> tempOption;
 	do {
-		do {
-			cout << "Enter the x-coordinate (0, 1, or 2): " << endl;
-			cin >> nextOption.first;
-			if (cin.fail()) {
-				cout << "Invalid input. Please enter an integer." << endl;
-				cin.clear();
-				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			}
-		} while (cin.fail());
-		do {
-			cout << "Enter the y-coordinate (0, 1, or 2): " << endl;
-			cin >> nextOption.second;
-			if (cin.fail()) {
-				cout << "Invalid input. Please enter an integer." << endl;
-				cin.clear();
-				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			}
-		} while (cin.fail());
-	} while (isValid(nextOption.first, nextOption.second));
+		tempOption.first = requestCoordinates("x");
+		tempOption.second = requestCoordinates("y");
+	} while (isEmpty(tempOption.first, tempOption.second));
+	nextOption = tempOption;
 }
 
-bool Play::isValid(int coordinate_x, int coordinate_y) {
-	if (coordinate_y < 3 && coordinate_x < 3) {
-		if (board[coordinate_x][coordinate_y] == "0") {
-			return false;
+int Play::requestCoordinates(std::string axes) {
+	int option;
+	while (1) {
+		cout << "Enter the " << axes << " - coordinate(0, 1, or 2) : " << endl;
+		cin >> option;
+		if (cin.fail()) {
+			cout << "Invalid input. Please enter an integer." << endl;
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			continue;
 		}
+		if (option > 2 || option < 0) {
+			cout << "Valid coordinates are 0, 1, or 2. Please retry !! " << endl;
+			continue;
+		}
+		else
+			break;
+	}
+	return option;
+}
+
+bool Play::isEmpty(int coordinate_x, int coordinate_y) {
+	if (board[coordinate_x][coordinate_y] == "0") {
+		return false;
 	}
 	cout << "Invalid Input ! Re-try with a valid input !! ";
 	printBoard();
@@ -69,10 +74,12 @@ void Play::switchPlayer() {
 	if (!A.getTurn()) {
 		A.setTurn();
 		B.resetTurn();
+		cout << endl << "Player A's turn" << endl;
 	}
 	else {
 		B.setTurn();
 		A.resetTurn();
+		cout << endl << "Player B's turn" << endl;
 	}
 }
 
@@ -92,13 +99,10 @@ bool Play::checkGameEnd() {
 			winner = a;
 			break;
 		}
-		else {
-			if (checkedCellCount <= 8) {
-				return true;
-			}
-			else {
-				break;
-			}
+	}
+	if (winner == "Waiting") {
+		if (checkedCellCount <= 8) {
+			return true;
 		}
 	}
 
@@ -115,7 +119,7 @@ bool Play::checkGameEnd() {
 	printBoard();
 	string x = "Waiting";
 	while (x == "Waiting") {
-		cout << "Press any key to exit" << endl;
+		cout << "Press any key and then ENTER to exit" << endl;
 		cin >> x;
 	}
 	return false;
