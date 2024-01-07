@@ -22,6 +22,12 @@ int Play::requestCoordinates(std::string axes) {
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			continue;
 		}
+		if (cin.peek() != '\n') {
+			cout << "Invalid input. Please enter only an integer." << endl;
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			continue;
+		}
 		if (option > 2 || option < 0) {
 			cout << "Valid coordinates are 0, 1, or 2. Please retry !! " << endl;
 			continue;
@@ -36,7 +42,7 @@ bool Play::isEmpty(int coordinate_x, int coordinate_y) {
 	if (board[coordinate_x][coordinate_y] == "0") {
 		return false;
 	}
-	cout << "Invalid Input ! Re-try with a valid input !! ";
+	cout << "The option is already selected. Please select an empty cell !!";
 	printBoard();
 	return true;
 }
