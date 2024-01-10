@@ -1,11 +1,20 @@
 cmake_minimum_required(VERSION 3.25)
 project(TicTacToe)
 
-# Set the path to the directory where you cloned Google Test
-set(GTEST_ROOT "${CMAKE_SOURCE_DIR}/googletest/googletest")
+# GoogleTest requires at least C++14
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Include Google Test
-include_directories(${GTEST_ROOT}/googletest/include)
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
 
 # Add the include directory
 include_directories(include)
@@ -14,10 +23,14 @@ include_directories(include)
 file(GLOB SRC_FILES src/*.cpp)
 
 # Add the source files
-add_executable(MyProject ${SRC_FILES})
-
-# Add the test executable
+add_executable(TicTacToe ${SRC_FILES})
 add_executable(MyTests tests/MyTests.cpp)
 
 # Link the test executable with Google Test libraries
-target_link_libraries(MyTests gtest gtest_main)
+target_link_libraries(
+	MyTests 
+	GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(MyTests)
