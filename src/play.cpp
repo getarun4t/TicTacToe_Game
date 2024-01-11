@@ -1,4 +1,7 @@
 #include "play.hpp"
+#include <limits>
+
+#undef max
 
 #undef max
 
