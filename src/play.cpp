@@ -1,5 +1,7 @@
 #include "play.hpp"
 
+#undef max
+
 using namespace std;
 
 void Play::getNextOption() {
