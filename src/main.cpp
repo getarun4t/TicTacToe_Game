@@ -1,6 +1,7 @@
 #include "play.hpp"
 
-void main() {
+int main() {
 	Play game;
 	game.run();
+	return 0;
 }
