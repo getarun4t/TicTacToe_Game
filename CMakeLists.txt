@@ -17,14 +17,14 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 # Add the include directory
-include_directories(include)
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Get a list of all .cpp files in the src directory
-file(GLOB SRC_FILES src/*.cpp)
+file(GLOB SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
 # Add the source files
 add_executable(TicTacToe ${SRC_FILES})
-add_executable(MyTests tests/MyTests.cpp)
+add_executable(MyTests ${CMAKE_SOURCE_DIR}/tests/MyTests.cpp)
 
 # Link the test executable with Google Test libraries
 target_link_libraries(
