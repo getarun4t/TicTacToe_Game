@@ -19,10 +19,16 @@ jobs:
         sudo apt-get install -y cmake
       shell: bash
 
-    - name: Configure and Generate with CMake
+    - name: Build the environment
       run: |
         cmake -S . -B build
         cmake --build build
+        cd build
+        ctest
+      working-directory: ${{ github.workspace }}
+
+    - name: Run Google Tests
+      run: |
         cd build
         ctest
       working-directory: ${{ github.workspace }}
