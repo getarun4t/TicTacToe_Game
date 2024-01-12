@@ -22,15 +22,18 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # Get a list of all .cpp files in the src directory
 file(GLOB SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
+# Get a list of all .cpp files in the tests directory
+file(GLOB TEST_FILES ${CMAKE_SOURCE_DIR}/tests/*.cpp)
+
 # Add the source files
 add_executable(TicTacToe ${SRC_FILES})
-add_executable(MyTests ${CMAKE_SOURCE_DIR}/tests/MyTests.cpp)
+add_executable(MyGTests ${TEST_FILES})
 
 # Link the test executable with Google Test libraries
 target_link_libraries(
-	MyTests 
+	MyGTests 
 	GTest::gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(MyTests)
+gtest_discover_tests(MyGTests)
