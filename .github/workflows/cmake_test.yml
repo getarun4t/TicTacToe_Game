@@ -22,7 +22,9 @@ jobs:
     - name: Build the environment
       run: |
         cmake -S . -B build
+        g++ -c play.cpp
         cmake --build build
+        g++ MyTests.cpp play.o -o MyTests
         cd build
         ctest
       working-directory: ${{ github.workspace }}
