@@ -22,7 +22,7 @@ jobs:
     - name: Build the environment
       run: |
         cmake -S . -B build
-        g++ -c play.cpp
+        g++ -c ../src/play.cpp
         cmake --build build
         g++ MyTests.cpp play.o -o MyTests
         cd build
