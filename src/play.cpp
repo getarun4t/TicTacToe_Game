@@ -3,8 +3,6 @@
 
 #undef max
 
-#undef max
-
 using namespace std;
 
 void Play::getNextOption() {
