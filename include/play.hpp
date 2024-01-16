@@ -8,7 +8,6 @@
 
 class Play {
 	int checkedCellCount;
-	std::vector<std::vector<std::string>> board;
 	std::pair<int, int> nextOption;
 	Player A;
 	Player B;
@@ -16,7 +15,6 @@ class Play {
 	void getNextOption();
 	bool isEmpty(int coordinate_x, int coordinate_y);
 	void printBoard();
-	bool checkGameEnd();
 	void markInBoard();
 	void switchPlayer();
 	int requestCoordinates(std::string axes);
@@ -24,6 +22,8 @@ class Play {
 public:
 	Play();
 	void run();
+	bool checkGameEnd();
+	std::vector<std::vector<std::string>> board;
 };
 
 #endif // PLAY_HPP
