@@ -31,9 +31,9 @@ add_executable(MyTests ${TEST_FILES})
 
 # Link the test executable with Google Test libraries
 target_link_libraries(
-	MyTests 
+	MyGTests 
 	GTest::gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(MyTests)
+gtest_discover_tests(MyGTests)
