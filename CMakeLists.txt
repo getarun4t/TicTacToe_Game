@@ -27,7 +27,7 @@ file(GLOB TEST_FILES ${CMAKE_SOURCE_DIR}/tests/*.cpp)
 
 # Add the source files
 add_executable(TicTacToe ${SRC_FILES})
-add_executable(MyTests ${TEST_FILES})
+add_executable(MyGTests ${TEST_FILES})
 
 # Link the test executable with Google Test libraries
 target_link_libraries(
