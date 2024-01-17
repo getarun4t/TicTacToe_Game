@@ -19,22 +19,34 @@ enable_testing()
 # Add the include directory
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-# Get a list of all .cpp files in the src directory
-file(GLOB SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
+# Define source files for the main executable
+set(SRC_FILES 
+    ${CMAKE_SOURCE_DIR}/src/play.cpp
+    ${CMAKE_SOURCE_DIR}/src/player.cpp
+    ${CMAKE_SOURCE_DIR}/src/main.cpp
+)
 
-# Get a list of all .cpp files in the tests directory
-file(GLOB TEST_FILES ${CMAKE_SOURCE_DIR}/tests/*.cpp)
+# Define source files for the test executable
+set(TEST_FILES 
+    ${CMAKE_SOURCE_DIR}/tests/MyTests.cpp
+    ${CMAKE_SOURCE_DIR}/src/play.cpp
+    ${CMAKE_SOURCE_DIR}/src/player.cpp  # Add player.cpp to the test executable
+)
 
-# Define source files
-add_executable(my_executable ${SRC_FILES})
+# Define the main executable
+add_executable(TicTacToe ${SRC_FILES})
+
+# Define the test executable
 add_executable(MyGTests ${TEST_FILES})
 
+# Link the main executable with Google Test libraries
+target_link_libraries(TicTacToe gtest_main)
+
 # Link the test executable with Google Test libraries
-target_link_libraries(my_executable gtest_main)
 target_link_libraries(
-	MyGTests 
-	GTest::gtest_main
-	gtest
+    MyGTests 
+    GTest::gtest_main
+    gtest
 )
 
 include(GoogleTest)
