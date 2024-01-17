@@ -8,6 +8,5 @@ TEST(Play, Demo) {
 
 TEST(Play, TestFile) {
   Play game;
-
   EXPECT_EQ(game.checkGameEnd(), true);
 }

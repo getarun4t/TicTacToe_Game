@@ -43,7 +43,6 @@ add_executable(MyGTests ${TEST_FILES})
 target_link_libraries(TicTacToe gtest_main)
 
 # Link the test executable with Google Test libraries
-target_link_libraries(my_executable gtest_main)
 target_link_libraries(
     MyGTests 
     GTest::gtest_main
