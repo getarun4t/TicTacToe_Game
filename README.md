@@ -11,9 +11,9 @@ If there is no empty cell and there is no clear winner, the code display the sam
 # **How to Play**
 1. Clone the repository
 2. Build the code using the following steps:
-    cmake -S . -B build
-    cmake --build build
+    ```cmake -S . -B build```
+    ```cmake --build build```
 3. Play the Game:
-    cd build
-    cd Debug
-    ./TicTacToe.exe   
+    ```cd build```
+    ```cd Debug```
+    ```./TicTacToe.exe``` 
