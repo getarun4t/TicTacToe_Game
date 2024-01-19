@@ -9,11 +9,16 @@ The code will automatically check for a winner on each turn and will display the
 If there is no empty cell and there is no clear winner, the code display the same and prompt the user's to end and exit the game.
 
 # **How to Play**
-1. Clone the repository
-2. Build the code using the following steps:
-    ```cmake -S . -B build```
-    ```cmake --build build```
-3. Play the Game:
-    ```cd build```
-    ```cd Debug```
-    ```./TicTacToe.exe``` 
+To play the game, first clone the repository and then build the code using the following steps:
+
+```cmake -S . -B Build```
+
+```cmake --build Build```
+
+Once build is done, game can be started using the following steps:
+
+```cd Build```
+
+```cd Debug```
+
+```./TicTacToe.exe``` 
