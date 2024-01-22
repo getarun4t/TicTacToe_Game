@@ -25,7 +25,7 @@ public:
 	void run();
 	bool checkGameEnd();
 	void setBoardValue(int x, int y, auto z);
-	auto getBoardValue(int x, int y)
+	auto getBoardValue(int x, int y);
 };
 
 #endif // PLAY_HPP
