@@ -144,3 +144,11 @@ void Play::run() {
 		markInBoard();
 	} while (checkGameEnd());
 }
+
+void Play::setBoardValue(int x, int y, auto z) {
+	board[x][y] = z;
+}
+
+auto Play::getBoardValue(int x, int y) {
+	return board[x][y];
+}
