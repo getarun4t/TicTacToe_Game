@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <future>
+#include <thread>
 
 class Play {
 	int checkedCellCount;
@@ -12,6 +14,8 @@ class Play {
 	Player A;
 	Player B;
 	std::vector<std::vector<std::string>> board;
+	std::promise<void> exitSignal;
+	std::shared_future<void> exitFuture;
 
 	void getNextOption();
 	bool isEmpty(int coordinate_x, int coordinate_y);

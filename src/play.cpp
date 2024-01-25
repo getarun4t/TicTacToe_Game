@@ -92,7 +92,7 @@ void Play::switchPlayer() {
 	}
 }
 
-Play::Play() : checkedCellCount(0), board(vector<vector<string>>(3, vector<string>(3, "0"))) {};
+Play::Play() : checkedCellCount(0), board(vector<vector<string>>(3, vector<string>(3, "0"))), exitFuture(exitSignal.get_future().share()) {};
 
 bool Play::checkGameEnd() {
 	string winner = "Waiting";
