@@ -5,6 +5,8 @@
 
 using namespace std;
 
+Play::Play() : checkedCellCount(0), board(vector<vector<string>>(3, vector<string>(3, "0"))), exitFuture(exitSignal.get_future().share()) {};
+
 void Play::getNextOption() {
 	std::pair<int, int> tempOption;
 	do {
@@ -16,6 +18,9 @@ void Play::getNextOption() {
 
 int Play::requestCoordinates(std::string axes) {
 	int option;
+	std::promise<int> promise;
+	std::shared_future<int> future = promise.get_future().share();
+
 	while (1) {
 		cout << "Enter the " << axes << " - coordinate(0, 1, or 2) : " << endl;
 		cin >> option;
@@ -35,10 +40,12 @@ int Play::requestCoordinates(std::string axes) {
 			cout << "Valid coordinates are 0, 1, or 2. Please retry !! " << endl;
 			continue;
 		}
-		else
+		else {
+			promise.set_value(option);
 			break;
+		}
 	}
-	return option;
+	return future.get();
 }
 
 bool Play::isEmpty(int coordinate_x, int coordinate_y) {
@@ -91,8 +98,6 @@ void Play::switchPlayer() {
 		cout << endl << "Player B's turn" << endl;
 	}
 }
-
-Play::Play() : checkedCellCount(0), board(vector<vector<string>>(3, vector<string>(3, "0"))), exitFuture(exitSignal.get_future().share()) {};
 
 bool Play::checkGameEnd() {
 	string winner = "Waiting";
